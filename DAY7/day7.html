@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day7-Task</title>
+</head>
+<body>
+    <script>
+
+function join(arr) {
+  // Helper function to find the common letters between two strings
+  function findCommonLetters(str1, str2) {
+    const set1 = new Set(str1);
+    const set2 = new Set(str2);
+    const common = [];
+    
+    for (const letter of set1) {
+      if (set2.has(letter)) {
+        common.push(letter);
+      }
+    }
+
+    return common;
+  }
+
+  let result = arr[0];
+  let minOverlap = Infinity;
+
+  for (let i = 1; i < arr.length; i++) {
+    const currentWord = arr[i];
+    const previousWord = arr[i - 1];
+
+    const commonLetters = findCommonLetters(previousWord, currentWord);
+
+    if (commonLetters.length < minOverlap) {
+      minOverlap = commonLetters.length;
+    }
+
+    const overlap = commonLetters.join('');
+    result += currentWord.replace(overlap, '');
+  }
+
+  return [result, minOverlap];
+}
+
+// Test cases
+console.log(join(["oven", "envier", "erase", "serious"])); // ➞ ["ovenvieraserious", 2]
+console.log(join(["move", "over", "very"])); // ➞ ["movery", 3]
+console.log(join(["to", "ops", "psy", "syllable"])); // ➞ ["topsyllable", 1]
+console.log(join(["aaa", "bbb", "ccc", "ddd"])); // ➞ ["aaabbbcccddd", 0]
+
+    </script>
+    
+</body>
+</html>

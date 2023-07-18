@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>day8-Task</title>
+</head>
+<body>
+    <script>
+
+function findPath(tickets) {
+  const graph = {};
+
+  // Build the graph using a hashmap
+  for (const [from, to] of tickets) {
+    if (!(from in graph)) {
+      graph[from] = [];
+    }
+    graph[from].push(to);
+  }
+
+  // Sort the destinations in lexicographical order
+  for (const destinations of Object.values(graph)) {
+    destinations.sort();
+  }
+
+  const itinerary = [];
+
+  // Helper function for DFS
+  function dfs(node) {
+    const destinations = graph[node];
+    while (destinations && destinations.length > 0) {
+      dfs(destinations.shift());
+    }
+    itinerary.push(node);
+  }
+
+  // Start the DFS from airport A
+  dfs('A');
+
+  return itinerary.reverse();
+}
+
+// Test case
+const tickets = [["C", "F"], ["A", "C"], ["I", "Z"], ["F", "I"]];
+const itinerary = findPath(tickets);
+console.log(itinerary);
+
+    </script>
+    
+</body>
+</html>
